@@ -1,0 +1,39 @@
+URxvt.font: xft:hack:size=10
+Xft.antialias: 1
+Xft.hinting: 1
+Xft.autohint: 0
+Xft.rgba: rgb
+Xft.hintstyle: hintslight
+dt.lcdfilter: lcddefault
+Xft.dpi: 96
+URxvt.scrollBar: false
+URxvt.scrollBar_right: false
+URxvt.scrollBar_floating: false
+URxvt.scrollstyle: rxvt
+*background: #000000
+*foreground: #fbf1c7
+
+!black
+*color0:  #1d2021
+*color8:  #282828
+!!red
+*color1:  #cc241d
+*color9:  #fb4934
+!!green
+*color2:  #98971a
+*color10: #b8bb26
+!!yellow
+*color3:  #d79921
+*color11: #fabd2f
+!!blue
+*color4:  #458588
+*color12: #83a598
+!!magenta
+*color5:  #b16286
+*color13: #d3869b
+!!cyan
+*color6:  #d65d0e
+*color14: #fe8019
+!white
+*color7:  #ffffff
+*color15: #ffffff
