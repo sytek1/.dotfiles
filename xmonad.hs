@@ -3,6 +3,7 @@ import XMonad
 import Data.Monoid
 import System.Exit
 import XMonad.Util.SpawnOnce
+import XMonad.Layout.Spacing
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -120,11 +121,12 @@ myEventHook = mempty
 ------------------------------------------------------------------------
 -- Status bars and logging
 myLogHook = return ()
+
 ------------------------------------------------------------------------
--- Startup hook
 myStartupHook = do
        spawnOnce "feh --bg-fill ~/Pictures/bridge.jpg &"
        spawnOnce "xrdb ~/.Xresources"
+       spawnOnce "picom -f &"
 ------------------------------------------------------------------------
 -- Defaults
 main = xmonad defaults
