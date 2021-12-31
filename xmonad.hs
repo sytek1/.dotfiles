@@ -4,6 +4,11 @@ import Data.Monoid
 import System.Exit
 import XMonad.Util.SpawnOnce
 import XMonad.Layout.Spacing
+import XMonad.Hooks.ManageDocks
+import XMonad.Layout.Grid
+import XMonad.Actions.NoBorders
+import XMonad.Layout.NoBorders
+import XMonad.Layout.Tabbed
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -59,7 +64,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_j     ), windows W.swapDown  )
     -- Swap the focused window with the previous window
     , ((modm .|. shiftMask, xK_k     ), windows W.swapUp    )
-    -- Shrink the master area
+     -- Toggle window border
+    , ((modm,               xK_g     ), withFocused toggleBorder)
+     -- Shrink the master area
     , ((modm,               xK_h     ), sendMessage Shrink)
     -- Expand the master area
     , ((modm,               xK_l     ), sendMessage Expand)
@@ -70,17 +77,17 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Deincrement the number of windows in the master area
     , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
     -- Toggle the status bar gap
-   -- , ((modm              , xK_b     ), sendMessage ToggleStruts)
+    , ((modm              , xK_b     ), sendMessage ToggleStruts)
     -- Quit xmonad
-    , ((mod1Mask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
+    , ((mod1Mask .|. shiftMask, xK_q ), io (exitWith ExitSuccess))
     -- Restart xmonad
-    , ((mod1Mask .|. shiftMask, xK_r     ), spawn "xmonad --recompile; xmonad --restart")
+    , ((mod1Mask .|. shiftMask, xK_r ), spawn "xmonad --recompile; xmonad --restart")
     ]
     
     ++
     -- Move windows & switch workspaces
     [((m .|. modm, k), windows $ f i)
-        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_3]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
     
    -------------------------------------------------------------------------
@@ -98,21 +105,22 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
     ]
 ------------------------------------------------------------------------
 -- Layouts:
-myLayout = tiled ||| Mirror tiled ||| Full
+myLayout = avoidStruts (noBorders Full ||| tiled ||| Grid ||| Mirror tiled ||| simpleTabbed )
   where
+     Grid = GridRatio (4/4)
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+     tiled   = spacing 7 $ Tall nmaster delta ratio
      -- The default number of windows in the master pane
      nmaster = 1
      -- Default proportion of screen occupied by master pane
      ratio   = 1/2
      -- Percent of screen to increment by when resizing panes
      delta   = 3/100
-------------------------------------------------------------------------
+    
+  -------------------------------------------------------------------------
 -- Window rules:
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Gimp"           --> doFloat
+    [ className =? "Mplayer"        --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
 ------------------------------------------------------------------------
@@ -124,12 +132,14 @@ myLogHook = return ()
 
 ------------------------------------------------------------------------
 myStartupHook = do
-       spawnOnce "feh --bg-fill ~/Pictures/bridge.jpg &"
+       spawnOnce "feh --bg-fill ~/Pictures/tall.jpg &"
        spawnOnce "xrdb ~/.Xresources"
-       spawnOnce "picom -f &"
+    --   spawnOnce "picom -f &"
+       spawnOnce "xmobar ~/.config/xmobar/xmobarrc &"
 ------------------------------------------------------------------------
 -- Defaults
-main = xmonad defaults
+main = xmonad $ docks defaults
+  
 defaults = def {
       -- simple stuff
         terminal           = myTerminal,

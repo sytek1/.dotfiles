@@ -1,4 +1,4 @@
-URxvt.font: xft:hack:size=10
+URxvt.font: xft:hack:size=11
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.autohint: 0
@@ -11,7 +11,6 @@ URxvt.scrollBar_right: false
 URxvt.scrollBar_floating: false
 URxvt.scrollstyle: rxvt
 URxvt.depth:32
-URxvt.background:rgba:0000/0000/1111/dddd
 *background: #000000
 *foreground: #fbf1c7
 
