@@ -1,10 +1,9 @@
 Config { font = "xft:Inter:weight:regular:pixelsize=14:altialias:True:hinting:hintslight"
        , additionalFonts = []
        , borderColor = "black"
-       , border = TopB
        , bgColor = "#000000"
        , fgColor = "#ffffff"
-       , alpha = 0
+       , alpha = 150
        , position = Top
        , textOffset = -1
        , iconOffset = -1
@@ -15,7 +14,7 @@ Config { font = "xft:Inter:weight:regular:pixelsize=14:altialias:True:hinting:hi
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Weather "EGPF" ["-t","<station>: <tempC>C",
+       , commands = [ Run Weather "UUEE" ["-t","<station>: <tempC>C",
                                           "-L","18","-H","25",
                                           "--normal","green",
                                           "--high","red",
@@ -24,12 +23,12 @@ Config { font = "xft:Inter:weight:regular:pixelsize=14:altialias:True:hinting:hi
                                           "--normal","green","--high","red"] 10
                     , Run Cpu ["-L","3","-H","50",
                                "--normal","green","--high","red"] 10
-                    , Run Memory ["-t","Mem: <usedratio>%"] 10
+                    , Run Memory ["-t","mem: <used>M"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
-                    , Run Date "%a %b %_d %Y %H:%M:%S" "date" 10
+                    , Run Date "%a %b %_d %Y %H:%M" "date" 10
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% * %swap% | %enp3s0% }\
-                    \{ <fc=#ee9a00>%date%</fc>| %EGPF% | %uname%"
+       , template = "%cpu% | %memory% | %enp3s0% }\
+                    \{ %UUEE% | <fc=#ffffff>%date%</fc> | %uname%"
        }
