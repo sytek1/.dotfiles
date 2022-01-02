@@ -1,0 +1,4 @@
+UUID="E99C-EE37"				/boot		vfat		defaults,noatime	0 2
+UUID="d84c0322-108c-4112-8459-fe9507550d46"	/		ext4		noatime			0 1
+UUID="32931ac0-1e23-4fe6-83ac-93cda52e5982"	/home/sy/backup	ext4		noatime			0 0
+tmpfs		/var/tmp/portage		tmpfs	size=9G,uid=portage,gid=portage,mode=775,nosuid,noatime,nodev	0 0
