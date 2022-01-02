@@ -1,0 +1,13 @@
+x11-terms/rxvt-unicode 256-color xft
+net-p2p/transmission gtk
+net-libs/nodejs -lto
+www-client/firefox clang
+sys-kernel/linux-firmware -redistributable
+app-arch/xz-utils -extra-filters
+sys-libs/ncurses minimal
+sys-kernel/gentoo-sources experimental
+app-office/libreoffice gtk -clang
+dev-libs/boost nls
+dev-lang/python sqlite
+x11-misc/xmobar weather xft
+*/* PYTHON_TARGETS: python3_9 python3_10
