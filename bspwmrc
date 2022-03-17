@@ -2,11 +2,11 @@
 
 pgrep -x sxhkd > /dev/null || sxhkd &
 
-bspc monitor -d I II III IV V VI VII VIII IX X
+bspc monitor -d I II III
 
 bspc config border_width         1
 bspc config window_gap           0
-bspc config focused_border_color  "#fabd2f"
+bspc config focused_border_color  "#d79921"
 bspc config focus_follows_pointer true
 bspc config split_ratio          0.5
 bspc config borderless_monocle   true
@@ -17,6 +17,7 @@ bspc rule -a Chromium desktop='^2'
 bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
+bspc rule -a Zathura state=tiled
 
 # Autostart
 feh --bg-fill --randomize ~/.wallpapers/* &
