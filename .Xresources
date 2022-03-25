@@ -1,4 +1,4 @@
-URxvt.font: xft:hack:size=11
+URxvt.font: xft:hack:size=11:antialias=true
 Xft.antialias: 1
 Xft.hinting: 1
 Xft.autohint: 0
@@ -13,6 +13,10 @@ URxvt.scrollstyle: rxvt
 URxvt.depth: 32
 URxvt.background: [70]#000000
 URxvt*internalBorder: 30
+URxvt*scrollTtyOutput: false
+URxvt*scrollWithBuffer: true
+URxvt*scrollTtyKeypress: true
+URxvt.cursorBlink: True
 *background: #000000
 *foreground: #fbf1c7
 *cursorColor: #fabd2f
