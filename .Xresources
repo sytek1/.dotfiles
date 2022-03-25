@@ -10,9 +10,17 @@ URxvt.scrollBar: false
 URxvt.scrollBar_right: false
 URxvt.scrollBar_floating: false
 URxvt.scrollstyle: rxvt
-URxvt.depth:32
+URxvt.depth: 32
+URxvt.background: [70]#000000
+URxvt*internalBorder: 30
 *background: #000000
 *foreground: #fbf1c7
+*cursorColor: #fabd2f
+
+urxvt.iso14755: false
+urxvt.keysym.Shift-Control-V: eval:paste_clipboard
+urxvt.keysym.Shift-Control-C: eval:selection_to_clipboard
+
 
 !black
 *color0:  #1d2021
