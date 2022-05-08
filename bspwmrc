@@ -18,7 +18,7 @@ bspc rule -a mplayer2 state=floating
 bspc rule -a Kupfer.py focus=on
 bspc rule -a Screenkey manage=off
 bspc rule -a Zathura state=tiled
-
+bspc rule -a galculator state=tiled
 # Autostart
 feh --bg-fill --randomize ~/.wallpapers/* &
 bspc desktop -l next
