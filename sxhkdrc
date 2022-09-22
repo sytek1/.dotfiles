@@ -1,10 +1,10 @@
 # terminal emulator
 super + Return
-	urxvt
+	alacritty
 	
 # browser
 super + w
-	firefox
+	qutebrowser	
 	
 # files
 super + f
