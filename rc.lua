@@ -18,7 +18,13 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Error handling
+
+-- Autostart
+awful.spawn.with_shell("picom -f")
+
+-- {{{ Error handling
+-- Check if awesome encountered an error during startup and fell back to
+-- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
@@ -39,25 +45,32 @@ do
         in_error = false
     end)
 end
+-- }}}
 
+-- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
 beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
-
--- Variables.
+-- This is used later as the default terminal and editor to run.
 terminal = "alacritty"
-editor = "nvim"
+editor = os.getenv("nvim") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
--- Modkey 
+-- Default modkey.
+-- Usually, Mod4 is the key with a logo between Control and Alt.
+-- If you do not like this or do not have such a key,
+-- I suggest you to remap Mod4 to another key using xmodmap or other tools.
+-- However, you can use another modifier like Mod1, but it may interact with others.
 modkey = "Mod4"
 
--- Layouts
+-- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
+    awful.layout.suit.fair,
     awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
 }
+-- }}}
 
+-- {{{ Menu
 -- Create a launcher widget and a main menu
 myawesomemenu = {
    { "hotkeys", function() hotkeys_popup.show_help(nil, awful.screen.focused()) end },
@@ -77,6 +90,7 @@ mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
 
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
+-- }}}
 
 -- Keyboard map indicator and switcher
 mykeyboardlayout = awful.widget.keyboardlayout()
@@ -127,7 +141,6 @@ local tasklist_buttons = gears.table.join(
 
 local function set_wallpaper(s)
     -- Wallpaper
-    beautiful.wallpaper = "~/Pictures/path.jpg"
     if beautiful.wallpaper then
         local wallpaper = beautiful.wallpaper
         -- If wallpaper is a function, call it with the screen
@@ -143,10 +156,10 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper()
+    set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3" }, s, awful.layout.layouts[1])
+    awful.tag({ "1", "2", "3"}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -255,7 +268,7 @@ globalkeys = gears.table.join(
               {description = "open a terminal", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
-    awful.key({ modkey, "Control"   }, "q", awesome.quit,
+    awful.key({ modkey, "Control" }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
@@ -270,8 +283,10 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "Tab",   function () awful.layout.inc( 1)                end,
+    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
+    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
+              {description = "select previous", group = "layout"}),
 
     awful.key({ modkey, "Control" }, "n",
               function ()
@@ -311,7 +326,7 @@ clientkeys = gears.table.join(
             c:raise()
         end,
         {description = "toggle fullscreen", group = "client"}),
-    awful.key({ modkey,           }, "q",      function (c) c:kill()                         end,
+    awful.key({ modkey, 	  }, "q",      function (c) c:kill()                         end,
               {description = "close", group = "client"}),
     awful.key({ modkey, "Control" }, "space",  awful.client.floating.toggle                     ,
               {description = "toggle floating", group = "client"}),

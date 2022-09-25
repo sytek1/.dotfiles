@@ -63,6 +63,12 @@
   #     - buttonless: Title bar, transparent background and no title bar buttons
   #decorations: full
 
+  # Background opacity
+  #
+  # Window opacity as a floating point number from `0.0` to `1.0`.
+  # The value `0.0` is completely transparent and `1.0` is opaque.
+  opacity: 0.7
+
   # Startup Mode (changes require restart)
   #
   # Values for `startup_mode`:
@@ -101,10 +107,10 @@
   # Scrolling distance multiplier.
   #multiplier: 3
 
-#Font configuration
- font:
+# Font configuration
+  font:
   # Normal (roman) font face
-  normal:
+   normal:
     # Font family
     #
     # Default:
@@ -150,7 +156,7 @@
     #style: Bold Italic
 
   # Point size
-  size: 10.0
+  size: 11.0
 
   # Offset is the extra space around each character. `offset.y` can be thought
   # of as modifying the line spacing, and `offset.x` as modifying the letter
@@ -171,12 +177,19 @@
   # Thin strokes are suitable for retina displays, but for non-retina screens
   # it is recommended to set `use_thin_strokes` to `false`.
   #use_thin_strokes: true
+  
+  # Use built-in font for box drawing characters.
+  #
+  # If `true`, Alacritty will use a custom built-in font for box drawing
+  # characters (Unicode points 2500 - 259f).
+  #
+  #builtin_box_drawing: true
 
 # If `true`, bold text is drawn using the bright color variants.
 #draw_bold_text_with_bright_colors: false
 
 # Colors (Tomorrow Night)
- colors:
+#colors:
   # Default colors
   primary:
     background: '#282828'
@@ -268,31 +281,31 @@
 
   # Normal colors
   normal:
-    black:   '#000000'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#ffffff'
+    black:   '#1d1f21'
+    red:     '#cc6666'
+    green:   '#b5bd68'
+    yellow:  '#f0c674'
+    blue:    '#81a2be'
+    magenta: '#b294bb'
+    cyan:    '#8abeb7'
+    white:   '#c5c8c6'
 
   # Bright colors
   bright:
-    black:   '#000000'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ffffff'
+    black:   '#666666'
+    red:     '#d54e53'
+    green:   '#b9ca4a'
+    yellow:  '#e7c547'
+    blue:    '#7aa6da'
+    magenta: '#c397d8'
+    cyan:    '#70c0b1'
+    white:   '#eaeaea'
 
   # Dim colors
   #
   # If the dim colors are not set, they will be calculated automatically based
   # on the `normal` colors.
-  #dim:
+  dim:
   #  black:   '#131415'
   #  red:     '#864343'
   #  green:   '#777c44'
@@ -311,6 +324,13 @@
   #   `- { index: 16, color: '#ff00ff' }`
   #
   #indexed_colors: []
+
+  # Transparent cell backgrounds
+  #
+  # Whether or not `window.opacity` applies to all cell backgrounds or only to
+  # the default background. When set to `true` all cells will be transparent
+  # regardless of their background color.
+  #transparent_background_colors: false
 
 # Bell
 #
@@ -352,12 +372,6 @@
   #     args: ["Hello, World!"]
   #
   #command: None
-
-# Background opacity
-#
-# Window opacity as a floating point number from `0.0` to `1.0`.
-# The value `0.0` is completely transparent and `1.0` is opaque.
-#background_opacity: 1.0
 
 #selection:
   # This string contains all characters that are used as separators for
@@ -433,6 +447,9 @@
 # Send ESC (\x1b) before characters when alt is pressed.
 #alt_send_esc: true
 
+# Offer IPC using `alacritty msg` (unix only)
+#ipc_socket: true
+
 #mouse:
   # Click settings
   #
@@ -507,13 +524,20 @@
 #   - Right
 #   - Numeric identifier such as `5`
 #
-# - `action` (see key bindings)
+# - `action` (see key bindings for actions not exclusive to mouse mode)
+#
+# - Mouse exclusive actions:
+#
+#   - ExpandSelection
+#       Expand the selection to the current mouse cursor location.
 #
 # And optionally:
 #
 # - `mods` (see key bindings)
 #mouse_bindings:
-#  - { mouse: Middle, action: PasteSelection }
+#  - { mouse: Right,                 action: ExpandSelection }
+#  - { mouse: Right,  mods: Control, action: ExpandSelection }
+#  - { mouse: Middle, mode: ~Vi,     action: PasteSelection  }
 
 # Key bindings
 #
@@ -582,6 +606,8 @@
 #   - ToggleFullscreen
 #   - SpawnNewInstance
 #       Spawn a new instance of Alacritty.
+#   - CreateNewWindow
+#       Create a new Alacritty window from the current process.
 #   - ClearLogNotice
 #       Clear Alacritty's UI warning and error notice.
 #   - ClearSelection
