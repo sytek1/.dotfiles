@@ -1,5 +1,4 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
+-- Imports
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
@@ -18,13 +17,10 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
-
 -- Autostart
 awful.spawn.with_shell("picom -f")
 
 -- {{{ Error handling
--- Check if awesome encountered an error during startup and fell back to
--- another config (This code will only ever execute for the fallback config)
 if awesome.startup_errors then
     naughty.notify({ preset = naughty.config.presets.critical,
                      title = "Oops, there were errors during startup!",
@@ -47,24 +43,20 @@ do
 end
 -- }}}
 
--- {{{ Variable definitions
--- Themes define colours, icons, font and wallpapers.
+-- themes
 beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
--- This is used later as the default terminal and editor to run.
+beautiful.get().wallpaper = "/home/sy/.config/awesome/lamp.jpg"
+-- default progs
 terminal = "alacritty"
 editor = os.getenv("nvim") or "nvim"
 editor_cmd = terminal .. " -e " .. editor
 
--- Default modkey.
--- Usually, Mod4 is the key with a logo between Control and Alt.
--- If you do not like this or do not have such a key,
--- I suggest you to remap Mod4 to another key using xmodmap or other tools.
--- However, you can use another modifier like Mod1, but it may interact with others.
+-- modkey.
 modkey = "Mod4"
 
--- Table of layouts to cover with awful.layout.inc, order matters.
+-- layouts
 awful.layout.layouts = {
-    awful.layout.suit.tile,
+--    awful.layout.suit.tile,
     awful.layout.suit.fair,
     awful.layout.suit.max,
 }
@@ -87,7 +79,6 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
 
 mylauncher = awful.widget.launcher({ image = beautiful.awesome_icon,
                                      menu = mymainmenu })
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -219,7 +210,7 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
-    awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
+    awful.key({ modkey,           }, "F1",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
               {description = "view previous", group = "tag"}),
@@ -227,7 +218,6 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
@@ -240,7 +230,7 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
+    awful.key({ modkey,           }, "m", function () mymainmenu:show() end,
               {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
@@ -270,7 +260,6 @@ globalkeys = gears.table.join(
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Control" }, "q", awesome.quit,
               {description = "quit awesome", group = "awesome"}),
-
     awful.key({ modkey,           }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
     awful.key({ modkey,           }, "h",     function () awful.tag.incmwfact(-0.05)          end,
@@ -283,11 +272,8 @@ globalkeys = gears.table.join(
               {description = "increase the number of columns", group = "layout"}),
     awful.key({ modkey, "Control" }, "l",     function () awful.tag.incncol(-1, nil, true)    end,
               {description = "decrease the number of columns", group = "layout"}),
-    awful.key({ modkey,           }, "space", function () awful.layout.inc( 1)                end,
+    awful.key({ modkey,	          }, "space", function () awful.layout.inc( 1)                end,
               {description = "select next", group = "layout"}),
-    awful.key({ modkey, "Shift"   }, "space", function () awful.layout.inc(-1)                end,
-              {description = "select previous", group = "layout"}),
-
     awful.key({ modkey, "Control" }, "n",
               function ()
                   local c = awful.client.restore()
@@ -299,11 +285,9 @@ globalkeys = gears.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
-
     -- Prompt
     awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
               {description = "run prompt", group = "launcher"}),
-
     awful.key({ modkey }, "x",
               function ()
                   awful.prompt.run {

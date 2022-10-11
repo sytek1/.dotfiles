@@ -5,7 +5,7 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
 mod = "mod4"
-terminal = "kitty"
+terminal = "alacritty"
 browser = "qutebrowser"
 
 keys = [
@@ -63,7 +63,7 @@ layouts = [
 
 widget_defaults = dict(
     font="inter",
-    fontsize=13,
+    fontsize=14,
     padding=3,
 )
 extension_defaults = widget_defaults.copy()
@@ -73,7 +73,7 @@ screens = [
         top=bar.Bar(
             [
                 widget.GroupBox(),
-                widget.Prompt(font="inter", fontsize="13"),
+                widget.Prompt(font="inter", fontsize="14"),
                 widget.WindowName(),
                 widget.Chord(
                     chords_colors={
@@ -81,14 +81,15 @@ screens = [
                     },
                     name_transform=lambda name: name.upper(),
                 ),
-                widget.TextBox("default config", name="default"),
-                widget.TextBox("Press &lt;M-r&gt; to spawn", foreground="#d75f5f"),
                 widget.Systray(),
-                widget.Clock(format="%I:%M %p"),
-                widget.QuickExit(),
+                widget.PulseVolume(),
+                widget.Memory(),
+                widget.Clock(format="%I:%M"),
             ],
             30,
         ),
+        wallpaper="~/Pictures/bay.jpg",
+        wallpaper_mode="fill"
         ),
 ]
 
